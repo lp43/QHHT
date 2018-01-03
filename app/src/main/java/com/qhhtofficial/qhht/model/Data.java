@@ -1,4 +1,4 @@
-package com.qhhtofficial.qhht.model.induction;
+package com.qhhtofficial.qhht.model;
 
 /**
  * Created by ehs_app_1 on 2018/1/3.

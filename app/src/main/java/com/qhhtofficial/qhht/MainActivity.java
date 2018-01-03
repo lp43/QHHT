@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.qhhtofficial.qhht.model.induction.Induction;
+import com.qhhtofficial.qhht.model.QhhtObj;
 import com.qhhtofficial.qhht.util.FileUtils;
 
 import java.util.ArrayList;
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             case FilePickerConst.REQUEST_CODE_DOC:
                 if(resultCode== Activity.RESULT_OK && data!=null)
                 {
+                    if(linearLayout!=null) linearLayout.removeAllViews();
+
                     txtPaths = new ArrayList<>();
                     ArrayList<String> paths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS);
                     txtPaths.addAll(paths);
@@ -52,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             final String json = FileUtils.getStringFromFile(path);
                             Log.i(TAG, "onActivityResult: json: "+ json);
-                            final Induction induction = new Gson().fromJson(json, Induction.class);
-                            String header = induction.getHeader();
+                            final QhhtObj qhhtObj = new Gson().fromJson(json, QhhtObj.class);
+                            String header = qhhtObj.getHeader();
                             if(!TextUtils.isEmpty(header)){
                                 Log.i(TAG, "onActivityResult: header: "+ header);
                                 Button button = new Button(this);
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onClick(View view) {
                                         Intent intent = new Intent();
                                         Bundle bundle = new Bundle();
-                                        bundle.putString(Consts.CONTENT, json);
+                                        bundle.putString(Constants.DATA, json);
                                         intent.setClass(MainActivity.this, ContentActivity.class);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
@@ -84,8 +89,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChooseFolderClick(View view){
-        String[] txt = {".txt"};
-        FilePickerBuilder.getInstance()
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_add) {
+            String[] txt = {".txt"};
+            FilePickerBuilder.getInstance()
                     .setMaxCount(10)
                     .setSelectedFiles(txtPaths)
                     .addFileSupport("TXT", txt)
@@ -93,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                     .enableDocSupport(false)
                     .setActivityTheme(R.style.FilePickerTheme)
                     .pickFile(this);
-    }
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
 }

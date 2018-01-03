@@ -5,11 +5,5 @@
     android:id="@+id/ll"
     android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="選取檔案路徑"
-        android:onClick="onChooseFolderClick"/>
-
 
 </LinearLayout>

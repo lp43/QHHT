@@ -27,7 +27,7 @@ public class DataAdapter extends ExpandableRecyclerViewAdapter<SectionViewHolder
   @Override
   public SectionViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_group, parent, false);
+        .inflate(R.layout.list_item_section, parent, false);
     return new SectionViewHolder(view);
   }
 
