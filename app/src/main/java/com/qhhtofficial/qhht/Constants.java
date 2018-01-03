@@ -6,4 +6,6 @@ package com.qhhtofficial.qhht;
 
 public class Constants {
     public final static String DATA = "data";
+    public final static String SOUND = "sound";
+    public final static String MEDIA_FOLDER_PATH = "media_folder_path";
 }

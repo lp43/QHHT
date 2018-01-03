@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.qhhtofficial.qhht.model.QhhtObj;
 import com.qhhtofficial.qhht.util.FileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -52,15 +53,15 @@ public class MainActivity extends AppCompatActivity {
                     txtPaths.addAll(paths);
                     for (int i = 0; i < txtPaths.size(); i++) {
 
-                        String path = txtPaths.get(i);
+                        final String path = txtPaths.get(i);
                         Log.i(TAG, "onActivityResult: path: "+ path);
                         try {
                             final String json = FileUtils.getStringFromFile(path);
-                            Log.i(TAG, "onActivityResult: json: "+ json);
+//                            Log.i(TAG, "onActivityResult: json: "+ json);
                             final QhhtObj qhhtObj = new Gson().fromJson(json, QhhtObj.class);
                             String header = qhhtObj.getHeader();
                             if(!TextUtils.isEmpty(header)){
-                                Log.i(TAG, "onActivityResult: header: "+ header);
+//                                Log.i(TAG, "onActivityResult: header: "+ header);
                                 Button button = new Button(this);
                                 button.setText(header);
                                 button.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
                                         Intent intent = new Intent();
                                         Bundle bundle = new Bundle();
                                         bundle.putString(Constants.DATA, json);
+                                        File file = new File(path);
+                                        String parent = file.getParent();
+                                        Log.i(TAG, "onClick: parent: "+parent);
+                                        bundle.putString(Constants.MEDIA_FOLDER_PATH, parent);
                                         intent.setClass(MainActivity.this, ContentActivity.class);
                                         intent.putExtras(bundle);
                                         startActivity(intent);

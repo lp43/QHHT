@@ -5,7 +5,7 @@
   android:viewportWidth="33"
   android:width="33dp">
 
-  <group
+  <section
     android:translateX="6.885517">
     <path
       android:fillColor="#F9C73D"
@@ -45,7 +45,7 @@ L9.4641431,25.5739577 C9.4641431,29.6777258 12.672794,33.199094
 25.6743715,23.2018971 C24.5658032,24.3116129 21.6865095,23.2305867
 19.2444462,20.7879496 L19.2444462,20.7879496 Z"
       android:strokeWidth="1" />
-  </group>
+  </section>
   <path
     android:fillColor="#C78829"
     android:pathData="M26.1047163,26.3944818 L23.809544,26.3944818 C22.8604902,26.3944818

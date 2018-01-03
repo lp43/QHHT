@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.qhhtofficial.qhht.R;
 import com.qhhtofficial.qhht.module.Content;
-import com.qhhtofficial.qhht.module.Group;
+import com.qhhtofficial.qhht.module.Section;
 import com.qhhtofficial.qhht.viewholder.ContentViewHolder;
 import com.qhhtofficial.qhht.viewholder.SectionViewHolder;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class DataAdapter extends ExpandableRecyclerViewAdapter<SectionViewHolder, ContentViewHolder> {
   Activity mActivity;
+  private OnItemClickListener listener;
 
   public DataAdapter(Activity activity, List<? extends ExpandableGroup> groups) {
     super(groups);
@@ -39,17 +41,24 @@ public class DataAdapter extends ExpandableRecyclerViewAdapter<SectionViewHolder
   }
 
   @Override
-  public void onBindChildViewHolder(ContentViewHolder holder, int flatPosition,
-                                    ExpandableGroup group, int childIndex) {
+  public void onBindChildViewHolder(final ContentViewHolder holder, final int flatPosition,
+                                    final ExpandableGroup group, final int childIndex) {
 
-    final Content content = ((Group) group).getItems().get(childIndex);
-    holder.setContent(content.getEnglish());
+    final Content content = ((Section) group).getItems().get(childIndex);
+    holder.setContent(content.getTitle(), content.getEnglish(), content.getChinese());
     holder.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Toast.makeText(mActivity, content.getEnglish(), Toast.LENGTH_SHORT).show();
+        if(listener!=null){
+          listener.onClick(flatPosition, group, childIndex);
+        }
       }
     });
+
+  }
+
+  public void setOnItemClickListener(OnItemClickListener listener){
+    this.listener = listener;
   }
 
   @Override
@@ -57,5 +66,10 @@ public class DataAdapter extends ExpandableRecyclerViewAdapter<SectionViewHolder
                                     ExpandableGroup group) {
 
     holder.setSectionTitle(group);
+  }
+
+  public interface OnItemClickListener{
+    void onClick(final int flatPosition,
+                 ExpandableGroup group, final int childIndex);
   }
 }

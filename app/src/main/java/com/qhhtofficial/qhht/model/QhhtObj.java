@@ -32,6 +32,6 @@ public class QhhtObj {
     @Override
     public String toString()
     {
-        return "ClassPojo [Header = "+Header+", Group = "+Group+"]";
+        return "ClassPojo [Header = "+Header+", Section = "+Group+"]";
     }
 }

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qhhtofficial.qhht.R;
-import com.qhhtofficial.qhht.module.Group;
+import com.qhhtofficial.qhht.module.Section;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
@@ -25,9 +25,9 @@ public class SectionViewHolder extends com.thoughtbot.expandablerecyclerview.vie
   }
 
   public void setSectionTitle(ExpandableGroup section) {
-    if (section instanceof Group) {
+    if (section instanceof Section) {
       sectionName.setText(section.getTitle());
-      icon.setBackgroundResource(((Group) section).getIconResId());
+      icon.setBackgroundResource(((Section) section).getIconResId());
     }
 
   }

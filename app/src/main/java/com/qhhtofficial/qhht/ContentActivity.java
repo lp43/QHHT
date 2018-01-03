@@ -6,16 +6,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qhhtofficial.qhht.adapter.DataAdapter;
 import com.qhhtofficial.qhht.model.QhhtObj;
+import com.qhhtofficial.qhht.module.Content;
+import com.qhhtofficial.qhht.module.Section;
+import com.qhhtofficial.qhht.util.AudioPlayer;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
-import static com.qhhtofficial.qhht.module.GenreDataFactory.makeGroups;
+import java.io.File;
+
+import static com.qhhtofficial.qhht.module.DataFactory.makeSections;
 
 /**
  * 導引詞
- * Created by ehs_app_1 on 2018/1/3.
+ * Created by Simon on 2018/1/3.
  */
 
 public class ContentActivity extends AppCompatActivity {
@@ -23,6 +30,7 @@ public class ContentActivity extends AppCompatActivity {
 
     public DataAdapter adapter;
     private QhhtObj mData;
+    private String mediaFolderPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +42,40 @@ public class ContentActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if(bundle!=null){
                 String json = bundle.getString(Constants.DATA);
-                Log.i(TAG, "onCreate: json: "+json);
+                mediaFolderPath = bundle.getString(Constants.MEDIA_FOLDER_PATH);
+//                Log.i(TAG, "onCreate: json: "+json);
                 mData = new Gson().fromJson(json, QhhtObj.class);
+                if(mData!=null){
+                    getSupportActionBar().setTitle(mData.getHeader());
+                }
+
             }
 
         }
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        adapter = new DataAdapter(this, makeGroups());
+        adapter = new DataAdapter(this, makeSections(mData));
+        adapter.setOnItemClickListener(new DataAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int flatPosition, ExpandableGroup group, int childIndex) {
+                final Content content = ((Section) group).getItems().get(childIndex);
+                if(content.isHasSound()){
+                    Toast.makeText(ContentActivity.this, "HasSound", Toast.LENGTH_SHORT).show();
+                    String mediaPath = mediaFolderPath+ File.separator+content.getTitle()+".mp3";
+                    Log.i(TAG, "onClick: mediaPath: "+mediaPath);
+                    AudioPlayer.getInstance().forcePlay(mediaPath);
+                }else{
+                    Toast.makeText(ContentActivity.this, "Has No Sound", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,8 +84,13 @@ public class ContentActivity extends AppCompatActivity {
                 // app icon in action bar clicked; goto parent activity.
                 onBackPressed();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AudioPlayer.getInstance().release();
     }
 }

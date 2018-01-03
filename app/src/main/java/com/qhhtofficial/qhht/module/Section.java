@@ -4,11 +4,11 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;
 
-public class Group extends ExpandableGroup<Content> {
+public class Section extends ExpandableGroup<Content> {
 
   private int iconResId;
 
-  public Group(String title, List<Content> items, int iconResId) {
+  public Section(String title, List<Content> items, int iconResId) {
     super(title, items);
     this.iconResId = iconResId;
   }
@@ -20,11 +20,11 @@ public class Group extends ExpandableGroup<Content> {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Group)) return false;
+    if (!(o instanceof Section)) return false;
 
-    Group group = (Group) o;
+    Section section = (Section) o;
 
-    return getIconResId() == group.getIconResId();
+    return getIconResId() == section.getIconResId();
 
   }
 

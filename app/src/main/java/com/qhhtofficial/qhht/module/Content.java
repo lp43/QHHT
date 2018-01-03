@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 public class Content implements Parcelable {
 
+  private String title;
   private String english;
   private String chinese;
   private boolean hasSound;
 
-  public Content(String english, String chinese, boolean hasSound) {
+  public Content(String title, String english, String chinese, boolean hasSound) {
+    this.title = title;
     this.english = english;
     this.chinese = chinese;
     this.hasSound = hasSound;
@@ -19,8 +21,20 @@ public class Content implements Parcelable {
     english = in.readString();
   }
 
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public String getEnglish() {
     return english;
+  }
+
+  public String getChinese() {
+    return chinese;
   }
 
   public boolean isHasSound() {
