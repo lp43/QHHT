@@ -2,19 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll"
     android:orientation="vertical">
 
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="引導詞"
-        android:onClick="onInductionClick"/>
+        android:text="選取檔案路徑"
+        android:onClick="onChooseFolderClick"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="潛意識"
-        android:onClick="onSubconsciousClick"/>
 
 </LinearLayout>
