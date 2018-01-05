@@ -1,4 +1,4 @@
-package com.qhhtofficial.qhht.module;
+package com.qhhtofficial.qhht.api;
 
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 

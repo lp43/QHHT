@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.qhhtofficial.qhht.R;
-import com.qhhtofficial.qhht.module.Content;
-import com.qhhtofficial.qhht.module.Section;
+import com.qhhtofficial.qhht.api.Content;
+import com.qhhtofficial.qhht.api.Section;
 import com.qhhtofficial.qhht.viewholder.ContentViewHolder;
 import com.qhhtofficial.qhht.viewholder.SectionViewHolder;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;

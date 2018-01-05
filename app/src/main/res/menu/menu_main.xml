@@ -2,6 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
+    <item android:id="@+id/action_delete"
+        android:title= "@string/ac_delete"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_setting"
+        android:title= "@string/ac_setting"
+        android:icon="@drawable/ic_setting"
+        app:showAsAction="always" />
+
     <item android:id="@+id/action_add"
         android:title= "@string/ac_add"
         android:icon="@drawable/ic_add"

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qhhtofficial.qhht.R;
-import com.qhhtofficial.qhht.module.Section;
+import com.qhhtofficial.qhht.api.Section;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import static android.view.animation.Animation.RELATIVE_TO_SELF;

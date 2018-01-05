@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">QHHT</string>
-    <string name="ac_add">新增</string>
+    <string name="ac_delete">清空腳本</string>
+    <string name="ac_setting">預設腳本路徑</string>
+    <string name="ac_add">新增腳本</string>
+    <string name="choose_script">選擇腳本檔(TXT檔)</string>
+    <string name="choose_setting">選擇預設路徑</string>
+
+    <string name="error_media">音檔播放錯誤</string>
+    <string name="error_player">播放器操作有誤</string>
 </resources>

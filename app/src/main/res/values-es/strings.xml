@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QHHT</string>
+    <string name="ac_delete">Clear All Scripts</string>
+    <string name="ac_setting">Default Script Path</string>
+    <string name="ac_add">Add Script</string>
+    <string name="choose_script">Choose TXT Script File</string>
+    <string name="choose_setting">Choose Default Path</string>
+
+    <string name="error_media">Music Error!</string>
+    <string name="error_player">Player Error!</string>
+</resources>

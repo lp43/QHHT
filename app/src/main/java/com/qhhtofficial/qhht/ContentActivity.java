@@ -11,14 +11,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.qhhtofficial.qhht.adapter.DataAdapter;
 import com.qhhtofficial.qhht.model.QhhtObj;
-import com.qhhtofficial.qhht.module.Content;
-import com.qhhtofficial.qhht.module.Section;
+import com.qhhtofficial.qhht.api.Content;
+import com.qhhtofficial.qhht.api.Section;
 import com.qhhtofficial.qhht.util.AudioPlayer;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.io.File;
 
-import static com.qhhtofficial.qhht.module.DataFactory.makeSections;
+import static com.qhhtofficial.qhht.api.DataFactory.makeSections;
 
 /**
  * 導引詞
@@ -61,7 +61,7 @@ public class ContentActivity extends AppCompatActivity {
             public void onClick(int flatPosition, ExpandableGroup group, int childIndex) {
                 final Content content = ((Section) group).getItems().get(childIndex);
                 if(content.isHasSound()){
-                    Toast.makeText(ContentActivity.this, "HasSound", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ContentActivity.this, "HasSound", Toast.LENGTH_SHORT).show();
                     String mediaPath = mediaFolderPath+ File.separator+content.getTitle()+".mp3";
                     Log.i(TAG, "onClick: mediaPath: "+mediaPath);
                     AudioPlayer.getInstance().forcePlay(mediaPath);

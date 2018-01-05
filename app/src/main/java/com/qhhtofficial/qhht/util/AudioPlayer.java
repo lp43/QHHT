@@ -3,6 +3,9 @@ package com.qhhtofficial.qhht.util;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.qhhtofficial.qhht.R;
 
 import java.io.IOException;
 
@@ -36,9 +39,10 @@ public class AudioPlayer {
             mMediaPlayer.start();
         } catch (IOException e) {
             Log.e(TAG, "IOException: "+e.getMessage() );
-            e.printStackTrace();
+            Toast.makeText(Utility.getAppContext(), Utility.getAppContext().getString(R.string.error_media), Toast.LENGTH_SHORT).show();
         } catch (IllegalStateException e){
             Log.e(TAG, "IllegalStateException: "+e.getMessage() );
+            Toast.makeText(Utility.getAppContext(), Utility.getAppContext().getString(R.string.error_player), Toast.LENGTH_SHORT).show();
         }
     }
 
