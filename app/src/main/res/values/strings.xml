@@ -8,4 +8,6 @@
 
     <string name="error_media">音檔播放錯誤</string>
     <string name="error_player">播放器操作有誤</string>
+
+    <string name="qhht_forum">QHHT論壇</string>
 </resources>

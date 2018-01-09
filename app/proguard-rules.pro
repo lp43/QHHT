@@ -37,3 +37,7 @@
 -keep class android.support.design.** { *; }
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
+
+# AgentWeb
+-keep class com.just.agentweb.** { *; }
+-dontwarn com.just.agentweb.**

@@ -21,12 +21,12 @@ import java.io.File;
 import static com.qhhtofficial.qhht.api.DataFactory.makeSections;
 
 /**
- * 導引詞
+ * 催眠腳本詞
  * Created by Simon on 2018/1/3.
  */
 
-public class ContentActivity extends AppCompatActivity {
-    private static final String TAG = ContentActivity.class.getSimpleName();
+public class ScriptActivity extends AppCompatActivity {
+    private static final String TAG = ScriptActivity.class.getSimpleName();
 
     public DataAdapter adapter;
     private QhhtObj mData;
@@ -35,7 +35,7 @@ public class ContentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content);
+        setContentView(R.layout.activity_script);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(getIntent()!=null){
@@ -48,7 +48,6 @@ public class ContentActivity extends AppCompatActivity {
                 if(mData!=null){
                     getSupportActionBar().setTitle(mData.getHeader());
                 }
-
             }
 
         }
@@ -61,12 +60,12 @@ public class ContentActivity extends AppCompatActivity {
             public void onClick(int flatPosition, ExpandableGroup group, int childIndex) {
                 final Content content = ((Section) group).getItems().get(childIndex);
                 if(content.isHasSound()){
-//                    Toast.makeText(ContentActivity.this, "HasSound", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ScriptActivity.this, "HasSound", Toast.LENGTH_SHORT).show();
                     String mediaPath = mediaFolderPath+ File.separator+content.getTitle()+".mp3";
                     Log.i(TAG, "onClick: mediaPath: "+mediaPath);
                     AudioPlayer.getInstance().forcePlay(mediaPath);
                 }else{
-                    Toast.makeText(ContentActivity.this, "Has No Sound", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScriptActivity.this, "Has No Sound", Toast.LENGTH_SHORT).show();
                 }
             }
         });

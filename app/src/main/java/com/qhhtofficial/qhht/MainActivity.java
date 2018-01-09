@@ -2,6 +2,7 @@ package com.qhhtofficial.qhht;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                             String parent = file.getParent();
                             Log.i(TAG, "onClick: parent: "+parent);
                             bundle.putString(Constants.MEDIA_FOLDER_PATH, parent);
-                            intent.setClass(MainActivity.this, ContentActivity.class);
+                            intent.setClass(MainActivity.this, ScriptActivity.class);
                             intent.putExtras(bundle);
                             startActivity(intent);
                         }
@@ -188,5 +189,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void onForumClick(View view){
+        Intent intent = new Intent();
+
+        intent.setClass(this, FourmActivity.class);
+
+//        String url = "https://www.qhhtofficial.com/forums";
+//        intent.setData(Uri.parse(url));
+
+        startActivity(intent);
     }
 }
