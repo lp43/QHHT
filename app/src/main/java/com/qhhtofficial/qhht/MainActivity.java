@@ -193,9 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onForumClick(View view){
         Intent intent = new Intent();
-
         intent.setClass(this, FourmActivity.class);
-
         startActivity(intent);
     }
 
