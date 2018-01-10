@@ -10,11 +10,6 @@
        android:text="@string/qhht_forum"
        android:onClick="onForumClick"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/qhht_forum_2"
-        android:onClick="onForum2Click"/>
 
     <LinearLayout
         android:layout_width="match_parent"

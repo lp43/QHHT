@@ -3,6 +3,7 @@
     <string name="ac_delete">Clear All Scripts</string>
     <string name="ac_setting">Default Script Path</string>
     <string name="ac_add">Add Script</string>
+    <string name="ac_sync_pos">Sync Scrollbar Position</string>
     <string name="choose_script">Choose TXT Script File</string>
     <string name="choose_setting">Choose Default Path</string>
 

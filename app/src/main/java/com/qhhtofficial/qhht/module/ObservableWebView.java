@@ -2,6 +2,7 @@ package com.qhhtofficial.qhht.module;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.webkit.WebView;
 
 /**
@@ -12,6 +13,8 @@ public class ObservableWebView extends WebView {
     private static final String TAG = "ObservableWebView";
 
     private OnScrollChangedCallback mOnScrollChangedCallback;
+
+    public int curX, curY;
 
     public ObservableWebView(Context context) {
         super(context);
@@ -29,7 +32,10 @@ public class ObservableWebView extends WebView {
     protected void onScrollChanged(final int l, final int t, final int oldl, final int oldt)
     {
         super.onScrollChanged(l, t, oldl, oldt);
-        if(mOnScrollChangedCallback != null) mOnScrollChangedCallback.onScroll(l, t);
+        this.curX = l;
+        this.curY = t;
+        Log.i(TAG, "onScrollChanged: curX: "+curX+", curY: "+curY);
+        if(mOnScrollChangedCallback != null) mOnScrollChangedCallback.onScroll(l, t, l-oldl, t-oldt);
     }
 
     public OnScrollChangedCallback getOnScrollChangedCallback()
@@ -47,6 +53,6 @@ public class ObservableWebView extends WebView {
      */
     public static interface OnScrollChangedCallback
     {
-        public void onScroll(int l, int t);
+        public void onScroll(int curX, int curY, int disX, int disY);
     }
 }

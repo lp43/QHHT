@@ -197,13 +197,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onForum2Click(View view){
-        Intent intent = new Intent();
-
-        String url = "https://www.qhhtofficial.com/forums";
-        intent.setData(Uri.parse(url));
-
-        startActivity(intent);
-    }
 
 }

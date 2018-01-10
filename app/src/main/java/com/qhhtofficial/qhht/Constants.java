@@ -12,4 +12,9 @@ public class Constants {
     public final static String MEDIA_FOLDER_PATH = "media_folder_path";
 
     public static final String SP_SETTINGS = "sp_setting";
+
+    public static final int WEB_SCROLL = 0;
+    public static final int WEB_SCRROLLBAR_SYNC = 1;
+    public static final int WEB_PAGE_START = 2;
+
 }
