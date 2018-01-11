@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl">
+    android:id="@+id/ll"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/transparent">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_gravity="top"
+            android:layout_margin="-3dp"
+            android:background="@android:color/transparent"
+            android:progressDrawable="@drawable/custom_progress"
+            android:progress="0"/>
+    </FrameLayout>
+
+</LinearLayout>

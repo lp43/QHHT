@@ -6,6 +6,9 @@
         android:title= "@string/ac_sync_pos"
         android:icon="@drawable/ic_sync"
         app:showAsAction="always" />
-
+    <item android:id="@+id/action_expand"
+        android:title= "@string/ac_expand"
+        android:icon="@drawable/ic_expand"
+        app:showAsAction="always" />
 </menu>
 

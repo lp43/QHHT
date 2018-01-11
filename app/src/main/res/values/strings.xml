@@ -4,6 +4,7 @@
     <string name="ac_setting">預設腳本路徑</string>
     <string name="ac_add">新增腳本</string>
     <string name="ac_sync_pos">捲軸同步</string>
+    <string name="ac_expand">佈局切換</string>
     <string name="choose_script">選擇腳本檔(TXT檔)</string>
     <string name="choose_setting">選擇預設路徑</string>
 

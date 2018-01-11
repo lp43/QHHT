@@ -10,17 +10,17 @@
         android:orientation="vertical">
 
         <fragment
-            android:id="@+id/webview_1"
+            android:id="@+id/webview_follow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.qhhtofficial.qhht.fragment.NativeWebFragment1"
+            android:name="com.qhhtofficial.qhht.fragment.NativeWebFollowFragment"
             android:layout_weight="1"/>
 
         <fragment
-            android:id="@+id/webview_2"
+            android:id="@+id/webview_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.qhhtofficial.qhht.fragment.NativeWebFragment2"
+            android:name="com.qhhtofficial.qhht.fragment.NativeWebMainFragment"
             android:layout_weight="1"/>
 
     </LinearLayout>
