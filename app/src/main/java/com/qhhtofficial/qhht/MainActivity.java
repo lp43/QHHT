@@ -49,16 +49,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_stop_watch).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                ArrayList<Integer> timeMarks = TimeConsumeManager.getInstance().getTimeMarks();
-                if(timeMarks!=null && timeMarks.size()>0){
-                    for (int i = 0; i < timeMarks.size(); i++) {
 
-                        TextView textView = new TextView(MainActivity.this);
-                        String mark = TimeConsumeManager.getInstance().convertToHHMM(timeMarks.get(i));
-                        textView.setText(mark);
-                        linearLayout.addView(textView);
-                    }
-                }
+                addText("time total: "+ TimeConsumeManager.getInstance().getTimesTotalInHHMM(), 20, Color.BLACK);
+
                 TimeConsumeManager.getInstance().reset();
                 ((Button)view).setText(R.string.qhht_stop_watch);
                 return false;
@@ -214,6 +207,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void addText(String text, int size, int color){
+        {
+            TextView textView = new TextView(MainActivity.this);
+            textView.setText(text);
+            if(color!=-1)textView.setTextColor(color);
+            if(size!=-1)textView.setTextSize(size);
+            linearLayout.addView(textView);
+        }
+    }
+
     public void onForumClick(View view){
         Intent intent = new Intent();
         intent.setClass(this, FourmActivity.class);
@@ -229,49 +232,46 @@ public class MainActivity extends AppCompatActivity {
                 public void onClockTick(Time currentTime) {
                     TimeConsumeManager.getInstance().addMinute(1);
                     if(view instanceof Button){
-                        int timeTotal = TimeConsumeManager.getInstance().getTimesTotal();
-                        String HHMM  = TimeConsumeManager.getInstance().convertToHHMM(timeTotal);
-                        ((Button)view).setText(HHMM);
+                        String timeTotal  = TimeConsumeManager.getInstance().getTimesTotalInHHMM();
+                        ((Button)view).setText(timeTotal);
                     }
                 }
             });
-        }else{
+        }
 
-            TimeConsumeManager.getInstance().addTimeMark();
-            // print time diff
-            {
-                if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>1){
-                    TextView textView = new TextView(MainActivity.this);
-                    textView.setTextColor(Color.RED);
-                    int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
-                    int timeBefore = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-2);
-                    int timeDiff = timeNow = timeBefore;
-                    String strTimeDiff = TimeConsumeManager.getInstance().convertToHHMM(timeDiff);
-                    textView.setText("+"+strTimeDiff);
-                    linearLayout.addView(textView);
-                }
+        TimeConsumeManager.getInstance().addTimeMark();
+        // print time diff
+        {
+            if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>1){
+                int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
+                int timeBefore = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-2);
+                int timeDiff = timeNow - timeBefore;
+                String strTimeDiff = TimeConsumeManager.getInstance().convertToHHMM(timeDiff);
+
+                addText("+"+strTimeDiff, -1, Color.BLUE);
             }
-            // print time mark
-            {
-                if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>0){
-                    TextView textView = new TextView(MainActivity.this);
-                    int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
-                    String mark = TimeConsumeManager.getInstance().convertToHHMM(timeNow);
-                    textView.setText("time mark: "+mark);
-                    linearLayout.addView(textView);
-                }
+        }
+        // print time mark
+        {
+            if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>0){
+                int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
+                String mark = TimeConsumeManager.getInstance().convertToHHMM(timeNow);
+
+                addText("time mark: "+mark, -1, -1);
             }
-
-
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+
         if(clock!=null){
             clock.stopTick();
             clock = null;
         }
+        
+        System.exit(0);
     }
 }

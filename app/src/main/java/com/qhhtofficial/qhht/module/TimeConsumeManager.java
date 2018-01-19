@@ -39,6 +39,10 @@ public class TimeConsumeManager {
         return timeTotalMins;
     }
 
+    public String getTimesTotalInHHMM(){
+        return convertToHHMM(timeTotalMins);
+    }
+
     public String convertToHHMM(int totalMins){
         if(totalMins<0)return "";
 
