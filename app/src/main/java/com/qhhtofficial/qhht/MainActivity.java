@@ -2,11 +2,12 @@ package com.qhhtofficial.qhht;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.angads25.filepicker.controller.DialogSelectionListener;
@@ -23,6 +25,8 @@ import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.gson.Gson;
 import com.qhhtofficial.qhht.model.QhhtObj;
 import com.qhhtofficial.qhht.module.ScriptManager;
+import com.qhhtofficial.qhht.module.TimeConsumeManager;
+import com.qhhtofficial.qhht.util.Clock;
 import com.qhhtofficial.qhht.util.FileUtils;
 import com.qhhtofficial.qhht.util.Utility;
 
@@ -34,13 +38,32 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
     FilePickerDialog dialog;
+    private Clock clock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Utility.setAppContext(this);
+
+        findViewById(R.id.btn_stop_watch).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ArrayList<Integer> timeMarks = TimeConsumeManager.getInstance().getTimeMarks();
+                if(timeMarks!=null && timeMarks.size()>0){
+                    for (int i = 0; i < timeMarks.size(); i++) {
+
+                        TextView textView = new TextView(MainActivity.this);
+                        String mark = TimeConsumeManager.getInstance().convertToHHMM(timeMarks.get(i));
+                        textView.setText(mark);
+                        linearLayout.addView(textView);
+                    }
+                }
+                TimeConsumeManager.getInstance().reset();
+                ((Button)view).setText(R.string.qhht_stop_watch);
+                return false;
+            }
+        });
         linearLayout = (LinearLayout)findViewById(R.id.ll);
 
         refresh();
@@ -197,5 +220,58 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onStopWatchClick(final View view){
 
+        if(clock==null){
+            clock = new Clock(this, Clock.TICK_METHOD.minute);
+            clock.addOnClockTickListner(new Clock.OnClockTickListner() {
+                @Override
+                public void onClockTick(Time currentTime) {
+                    TimeConsumeManager.getInstance().addMinute(1);
+                    if(view instanceof Button){
+                        int timeTotal = TimeConsumeManager.getInstance().getTimesTotal();
+                        String HHMM  = TimeConsumeManager.getInstance().convertToHHMM(timeTotal);
+                        ((Button)view).setText(HHMM);
+                    }
+                }
+            });
+        }else{
+
+            TimeConsumeManager.getInstance().addTimeMark();
+            // print time diff
+            {
+                if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>1){
+                    TextView textView = new TextView(MainActivity.this);
+                    textView.setTextColor(Color.RED);
+                    int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
+                    int timeBefore = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-2);
+                    int timeDiff = timeNow = timeBefore;
+                    String strTimeDiff = TimeConsumeManager.getInstance().convertToHHMM(timeDiff);
+                    textView.setText("+"+strTimeDiff);
+                    linearLayout.addView(textView);
+                }
+            }
+            // print time mark
+            {
+                if(TimeConsumeManager.getInstance().getTimeMarks()!=null && TimeConsumeManager.getInstance().getTimeMarks().size()>0){
+                    TextView textView = new TextView(MainActivity.this);
+                    int timeNow = TimeConsumeManager.getInstance().getTimeMarks().get(TimeConsumeManager.getInstance().getTimeMarks().size()-1);
+                    String mark = TimeConsumeManager.getInstance().convertToHHMM(timeNow);
+                    textView.setText("time mark: "+mark);
+                    linearLayout.addView(textView);
+                }
+            }
+
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(clock!=null){
+            clock.stopTick();
+            clock = null;
+        }
+    }
 }

@@ -12,5 +12,7 @@
     <string name="error_player">播放器操作有誤</string>
 
     <string name="qhht_forum">QHHT論壇</string>
-    <string name="qhht_forum_2">QHHT論壇(瀏覽器)</string>
+    <string name="qhht_stop_watch">開始計時</string>
+    <string name="start_time_counting">計時中</string>
+    <string name="add_time_mark">己添加時間標記</string>
 </resources>

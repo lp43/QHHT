@@ -12,5 +12,7 @@
     <string name="error_player">Player Error!</string>
 
     <string name="qhht_forum">QHHT FORUM</string>
-    <string name="qhht_forum_2">QHHT FORUM(Browser)</string>
+    <string name="qhht_stop_watch">STOP WATCH</string>
+    <string name="start_time_counting">START TIME COUNTING</string>
+    <string name="add_time_mark">ADDED TIME MARK</string>
 </resources>
