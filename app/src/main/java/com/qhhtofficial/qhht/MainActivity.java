@@ -1,5 +1,8 @@
 package com.qhhtofficial.qhht;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,6 +26,14 @@ import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.qhhtofficial.qhht.model.QhhtObj;
 import com.qhhtofficial.qhht.module.ScriptManager;
 import com.qhhtofficial.qhht.module.TimeConsumeManager;
@@ -81,36 +92,73 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.action_add:{
-                DialogProperties properties = new DialogProperties();
-                properties.selection_mode = DialogConfigs.SINGLE_MODE;
-                properties.selection_type = DialogConfigs.FILE_SELECT;
-                String script_folder = Utility.getStringValueForKey(MainActivity.this, Constants.SCRIPT_FOLDER_PATH);
-                if(TextUtils.isEmpty(script_folder)){
-                    properties.root = new File(DialogConfigs.DEFAULT_DIR);
-                }else{
-                    properties.root = new File(script_folder);
-                }
-                properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
-                properties.offset = new File(DialogConfigs.DEFAULT_DIR);
-                properties.extensions = new String[]{"txt"};
-                dialog = new FilePickerDialog(MainActivity.this,properties);
-                dialog.setTitle(getString(R.string.choose_script));
-                dialog.setDialogSelectionListener(new DialogSelectionListener() {
-                    @Override
-                    public void onSelectedFilePaths(String[] files) {
+                Dexter.withActivity(this)
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse response) {
+                                DialogProperties properties = new DialogProperties();
+                                properties.selection_mode = DialogConfigs.SINGLE_MODE;
+                                properties.selection_type = DialogConfigs.FILE_SELECT;
+                                String script_folder = Utility.getStringValueForKey(MainActivity.this, Constants.SCRIPT_FOLDER_PATH);
+                                if(TextUtils.isEmpty(script_folder)){
+                                    properties.root = new File(DialogConfigs.DEFAULT_DIR);
+                                }else{
+                                    properties.root = new File(script_folder);
+                                }
+                                properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+                                properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+                                properties.extensions = new String[]{"txt"};
+                                dialog = new FilePickerDialog(MainActivity.this,properties);
+                                dialog.setTitle(getString(R.string.choose_script));
+                                dialog.setDialogSelectionListener(new DialogSelectionListener() {
+                                    @Override
+                                    public void onSelectedFilePaths(String[] files) {
 //                        Log.i(TAG, "onSelectedFilePaths: ");
 
-                        for (int i = 0; i < files.length; i++) {
+                                        for (int i = 0; i < files.length; i++) {
 //                            Log.i(TAG, "files: "+files[i]);
-                            ScriptManager.getInstance().init(MainActivity.this).addPath(files[i]);
-                        }
-                        ScriptManager.getInstance().init(MainActivity.this).save();
+                                            ScriptManager.getInstance().init(MainActivity.this).addPath(files[i]);
+                                        }
+                                        ScriptManager.getInstance().init(MainActivity.this).save();
 
-                        refresh();
-                    }
+                                        refresh();
+                                    }
 
-                });
-                dialog.show();
+                                });
+                                dialog.show();
+                            }
+
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse response) {
+                                Toast.makeText(MainActivity.this, "您取消授權", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                new AlertDialog.Builder(MainActivity.this).setTitle("請求權限")
+                                        .setMessage("要讀腳本用的")
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            @Override public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+                            }
+                        })
+                        .withErrorListener(new PermissionRequestErrorListener() {
+                            @Override
+                            public void onError(DexterError error) {
+
+                            }
+                        })
+                        .check();
+
 
                 break;
             }
@@ -271,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
             clock.stopTick();
             clock = null;
         }
-        
+
         System.exit(0);
     }
 }
